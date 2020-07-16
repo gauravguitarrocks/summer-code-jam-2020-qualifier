@@ -107,12 +107,12 @@ class Article:
 #     publication_date=datetime.datetime(1837, 4, 7, 12, 15, 0),
 # )
 
-fairtale = Article(
-    title="The emperor's new clothes",
-    author="Hans Christian Andersen",
-    content="see anything.\nHis whole",
-    publication_date=datetime.datetime(1837, 4, 7, 12, 15, 0),
-)
+# fairtale = Article(
+#     title="The emperor's new clothes",
+#     author="Hans Christian Andersen",
+#     content="see anything.\nHis whole",
+#     publication_date=datetime.datetime(1837, 4, 7, 12, 15, 0),
+# )
 
 # print(fairytale.id)
 # print(fairtale.id)
@@ -120,5 +120,5 @@ fairtale = Article(
 # print(ord('t'))
 # print(ord(fairytale.content[0]))
 # print(ord(' '))
-print(fairtale.short_introduction(16))
+# print(fairtale.short_introduction(16))
 # print(str(fairtale.content.replace('\n',chr(32))))
