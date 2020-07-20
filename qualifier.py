@@ -33,6 +33,7 @@ class Article:
       self.author = author
       self.publication_date = publication_date
       self.content = content
+      self.last_edited = None
 
       Article._id += 1
       self.id = Article._id
@@ -60,6 +61,9 @@ class Article:
 
     def __len__(self):
       return (len(self.content))
+
+    def __lt__(self,other):
+      return self.publication_date < other.publication_date
 
     def most_common_words(self,rank: int):
       word = ''
@@ -115,10 +119,33 @@ class Article:
 # )
 
 # print(fairytale.id)
-# print(fairtale.id)
+# print(fairtale.last_edited)
 # print(fairytale.most_common_words(3))
 # print(ord('t'))
 # print(ord(fairytale.content[0]))
 # print(ord(' '))
 # print(fairtale.short_introduction(16))
 # print(str(fairtale.content.replace('\n',chr(32))))
+
+# articles = [
+#   Article(
+#     title="The emperor's new clothes",
+#     author="Hans Christian Andersen",
+#     content="see anything.\nHis whole",
+#     publication_date=datetime.datetime(2001, 7, 5),
+# ),
+# Article(
+#     title="The emperor's new clothes",
+#     author="Hans Christian Andersen",
+#     content="see anything.\nHis whole",
+#     publication_date=datetime.datetime(1837, 4, 7),
+# ),
+# Article(
+#     title="The emperor's new clothes",
+#     author="Hans Christian Andersen",
+#     content="see anything.\nHis whole",
+#     publication_date=datetime.datetime(2015, 8, 20),
+# )
+# ]
+
+# print(sorted(articles))
