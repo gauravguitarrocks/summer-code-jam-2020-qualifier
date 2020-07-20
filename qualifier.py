@@ -65,6 +65,11 @@ class Article:
     def __lt__(self,other):
       return self.publication_date < other.publication_date
 
+    def __setattr__(self,name,value):
+      if name == 'content':
+        self.last_edited = datetime.datetime.now()
+      super().__setattr__(name,value)
+
     def most_common_words(self,rank: int):
       word = ''
       word_list = list()
