@@ -15,6 +15,8 @@ Important notes for submission:
 """
 import datetime
 import typing
+from collections import Counter
+import re
 
 
 class ArticleField:
@@ -40,24 +42,14 @@ class Article:
 
     def short_introduction(self,n_characters : int):
       self.content = self.content.replace('\n',' ')
-      intro = list()
-      j = 0
-      i = n_characters
-      while(ord(self.content[i]) != 32):
-        j += 1
-        i -= 1
-
-      if (self.content[n_characters] == ' '):
-        for i in range(n_characters):
-          intro.append(self.content[i])
-      else:
-        for i in range(n_characters - j):
-          intro.append(self.content[i])
-      word = ''.join(intro)
-      return word
+      count = 0
+      for i in range(n_characters):
+        if self.content[i] == ' ':
+          count +=1
+      return ' '.join(self.content.split()[:count])
 
     def __repr__(self):
-      return '<Article title={title} author={author} publication_date={publication_date}>'.format(title=repr(self.title),author=repr(self.author),publication_date=repr(self.publication_date.isoformat()))
+      return f"<Article title={repr(self.title)} author={repr(self.author)} publication_date={repr(self.publication_date.isoformat())}>"
 
     def __len__(self):
       return (len(self.content))
@@ -71,43 +63,14 @@ class Article:
       super().__setattr__(name,value)
 
     def most_common_words(self,rank: int):
-      word = ''
-      word_list = list()
-      for i in range(len(self.content)):
-        if ((int(ord(self.content[i])) > 64 and int(ord(self.content[i])) < 90) or (int(ord(self.content[i])) > 96 and int(ord(self.content[i])) < 123)):
-          word += str(self.content[i])
-        else:
-          word = word.lower()
-          word_list.append(word)
-          word = ''
-      word_list.append(word)
-      length = len(word_list)
-      i = 0
-      while (i != length):
-        if (word_list[i] == ''):
-          word_list.remove(word_list[i])
-          length -= 1
-          continue
-        i += 1
-      word_frequency = list()
-      for word_ in word_list:
-        word_frequency.append(word_list.count(word_))
-      word_dict = dict(zip(word_list,word_frequency))
-      result = dict()
-      for key,value in word_dict.items():
-        if (key not in result.keys()):
-          result[key] = value
-      max_value = max(result.values())
-      filtered_results = dict()
-      while(max_value != -1):
-        for key,value in result.items():
-          if (value == max_value):
-            filtered_results[key] = value
-        max_value -= 1
-      if (rank <= len(filtered_results)):
-        return dict(list(filtered_results.items())[:rank])
-      else:
-        return dict(list(filtered_results.items())[:len(filtered_results)])
+      content = re.sub('[\W_]+',' ',self.content.lower())
+      counter = Counter(content.split())
+      word_list =  counter.most_common(rank)
+      common_words = dict()
+      for a,b in word_list:
+        common_words[a] = b
+      return common_words
+
 
 # fairytale = Article(
 #     title="The emperor's new clothes",
